@@ -4,6 +4,7 @@
     "module": "commonjs",
     "noImplicitAny": true,
     "noEmitOnError": true,
+    "outDir": "build",
     "target": "es5",
     "lib": ["es5", "es2015.collection", "es2015.iterable", "dom"],
     "jsx": "react",
