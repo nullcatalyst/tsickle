@@ -42,7 +42,12 @@ tests := $(filter %test.js,$(js))
 e2e_test := $(filter %/e2e_test.js,$(tests))
 tests_except_e2e := $(filter-out $(e2e_test),$(tests))
 
-# "make test" runs the test suite over the source.
+# "make unittest" runs the fast part of the test suite.
+.PHONY: unittest
+unittest: $(tests)
+	$(mocha) $(tests_except_e2e)
+
+# "make test" runs the full test suite.
 .PHONY: test
-test: $(tests)
+test: check-format $(tests)
 	$(mocha) $(tests_except_e2e) $(e2e_test)
