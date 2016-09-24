@@ -14,9 +14,9 @@ types := $(wildcard node_modules/@types/**)
 .PHONY: all
 all: compile
 
-# Create a pattern for each foo.ts file that is a matching
+# Create a pattern for each src/foo.ts file that produces a matching
 # build/foo.check-format.  This a stamp file that tracks whether
-# foo has been checked for clang-formatting.
+# src/foo.ts has been checked for clang-formatting.
 build/%.check-format: src/%.ts
 	@if ! diff -q <($(clang_format) $<) $< > /dev/null; then \
 		echo '$<: needs clang-format'; \
@@ -34,7 +34,7 @@ format: $(srcs)
 # "make lint" runs tslint over the source.
 .PHONY: lint
 lint: $(srcs)
-	$(tlint) $^
+	$(tslint) $^
 
 # "make compile" runs tsc over the source.
 .PHONY: compile
@@ -44,7 +44,7 @@ compile: $(js)
 
 # Gather up the tests, specifically the test/foo_test.js files
 # that we will pass to mocha.
-tests := $(sort $(filter %test.js,$(js)))
+tests := $(filter %test.js,$(js))
 # Split out the e2e test so we can run it last (it's slow).
 e2e_test := $(filter %/e2e_test.js,$(tests))
 tests_except_e2e := $(filter-out $(e2e_test),$(tests))
