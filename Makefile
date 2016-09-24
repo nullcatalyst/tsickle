@@ -14,17 +14,10 @@ types := $(wildcard node_modules/@types/**)
 .PHONY: all
 all: compile
 
-# Create a pattern for each src/foo.ts file that produces a matching
-# build/foo.check-format.  This a stamp file that tracks whether
-# src/foo.ts has been checked for clang-formatting.
-build/%.check-format: src/%.ts
-	@if ! diff -q <($(clang_format) $<) $< > /dev/null; then \
-		echo '$<: needs clang-format'; \
-		exit 1; \
-	fi
-	@mkdir -p $(dirname $@) && touch $@
+# "make check-format" verifies all source files are clang-formatted.
 .PHONY: check-format
-check-format: $(all_srcs:%=build/%.check-format)
+check-format: $(srcs)
+	./check-clang-format.sh $^
 
 # "make format" has clang-format update all source files.
 .PHONY: format
