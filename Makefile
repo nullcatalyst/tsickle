@@ -38,7 +38,7 @@ lint: $(srcs)
 
 # "make compile" runs tsc over the source.
 .PHONY: compile
-$(js): $(srcs) $(types)
+$(js): $(srcs) $(types) tsconfig.json
 	tsc
 compile: $(js)
 
