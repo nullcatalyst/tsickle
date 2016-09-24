@@ -29,6 +29,7 @@
     "clang-format": "^1.0.45",
     "glob": "^7.0.0",
     "google-closure-compiler": "^20160315.2.0",
+    "mocha": "^3.0.2",
     "tslint": "^3.15.1",
     "typescript": "2.1.0-dev.20160827"
   },
