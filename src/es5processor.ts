@@ -58,6 +58,7 @@ class ES5Processor extends Rewriter {
   }
 
   process(moduleId: string, isES5: boolean): {output: string, referencedModules: string[]} {
+    /*
     // TODO(evanm): only emit the goog.module *after* the first comment,
     // so that @suppress statements work.
     const moduleName = this.pathToModuleName('', this.file.fileName);
@@ -79,6 +80,7 @@ class ES5Processor extends Rewriter {
       // when assigning an `exports = {}` object and then later accessing it.
       this.emit(` exports = {}; var module = {id: '${moduleId}'};`);
     }
+    */
 
     let pos = 0;
     for (let stmt of this.file.statements) {
