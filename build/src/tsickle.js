@@ -814,20 +814,9 @@ var Annotator = (function (_super) {
         // here would cause a change in load order, which is observable (and can lead to errors).
         // Instead, goog.forwardDeclare types, which allows using them in type annotations without
         // causing a load. See below for the exception to the rule.
-        this.emit("\nconst " + forwardDeclarePrefix + " = goog.forwardDeclare('" + moduleNamespace + "');");
+        /* this.emit(`\nconst ${forwardDeclarePrefix} = goog.forwardDeclare('${moduleNamespace}');`); */
         var hasValues = exports.some(function (e) { return (e.flags & ts.SymbolFlags.Value) !== 0; });
         if (!hasValues) {
-            // Closure Compiler's toolchain will drop files that are never goog.require'd *before* type
-            // checking (e.g. when using --closure_entry_point or similar tools). This causes errors
-            // complaining about values not matching 'NoResolvedType', or modules not having a certain
-            // member.
-            // To fix, explicitly goog.require() modules that only export types. This should usually not
-            // cause breakages due to load order (as no symbols are accessible from the module - though
-            // contrived code could observe changes in side effects).
-            // This is a heuristic - if the module exports some values, but those are never imported,
-            // the file will still end up not being imported. Hopefully modules that export values are
-            // imported for their value in some place.
-            this.emit("\ngoog.require('" + moduleNamespace + "'); // force type-only module to be loaded");
         }
         for (var _i = 0, symbols_1 = symbols; _i < symbols_1.length; _i++) {
             var sym = symbols_1[_i];

@@ -860,7 +860,7 @@ class Annotator extends ClosureRewriter {
     // here would cause a change in load order, which is observable (and can lead to errors).
     // Instead, goog.forwardDeclare types, which allows using them in type annotations without
     // causing a load. See below for the exception to the rule.
-    this.emit(`\nconst ${forwardDeclarePrefix} = goog.forwardDeclare('${moduleNamespace}');`);
+    /* this.emit(`\nconst ${forwardDeclarePrefix} = goog.forwardDeclare('${moduleNamespace}');`); */
     const hasValues = exports.some(e => (e.flags & ts.SymbolFlags.Value) !== 0);
     if (!hasValues) {
       // Closure Compiler's toolchain will drop files that are never goog.require'd *before* type
@@ -873,7 +873,7 @@ class Annotator extends ClosureRewriter {
       // This is a heuristic - if the module exports some values, but those are never imported,
       // the file will still end up not being imported. Hopefully modules that export values are
       // imported for their value in some place.
-      this.emit(`\ngoog.require('${moduleNamespace}'); // force type-only module to be loaded`);
+      /* this.emit(`\ngoog.require('${moduleNamespace}'); // force type-only module to be loaded`); */
     }
     for (let sym of symbols) {
       if (sym.flags & ts.SymbolFlags.Alias) sym = typeChecker.getAliasedSymbol(sym);
